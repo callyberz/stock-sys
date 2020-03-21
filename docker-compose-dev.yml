@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+  inventory-sys:
+    image: 'app'
+    build:
+      context: .
+      args:
+       MODE: ${MODE}
+    restart: always
+    environment:
+      MODE: ${MODE}
+      PUBLIC_URL: https://groundzerohk.com
+      PUBLIC_HOST: http://localhost:3000
+      BASE_URL: /
+      DATABASE_URL: ${DATABASE_URL}
+    ports:
+      - '${PORT}:${PORT}'
+    volumes:
+      - ./build:/opt/app/build
+      - ./src:/opt/app/src
+      - ./package.json:/opt/app/package.json
+    entrypoint: /opt/app/entrypoint.sh
+    command: start
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.mywebserver-redirect-web-secure.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.mywebserver-redirect-web-secure.redirectscheme.permanent=true"
+      - "traefik.http.routers.my-app.middlewares=mywebserver-redirect-web-secure"
+      - "traefik.http.routers.my-app-web.rule=Host(`groundzerohk.com`)"
+      - "traefik.http.routers.my-app-web.entrypoints=web"
+      - "traefik.http.routers.my-app-web-secure.rule=Host(`groundzerohk.com`)"
+      - "traefik.http.routers.my-app-web-secure.tls.certresolver=myresolver"
+      - "traefik.http.routers.my-app-web-secure.tls=true"
+      - "traefik.http.routers.my-app-web-secure.entrypoints=websecure"
+
+networks:
+  default:
+    external:
+      name: farm
