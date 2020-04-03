@@ -14,7 +14,7 @@ import fonts from '../../assets/styles/fonts';
 const StyledLink = styled(Link)`
   display: block;
   padding: ${sizes.margin * 2}px 0;
-  color: ${colors.mediumGrey};
+  color: ${colors.black};
   text-transform: uppercase;
   font-size: 12px;
   letter-spacing 1.2px;
@@ -28,6 +28,7 @@ const StyledLink = styled(Link)`
     p {
       ${fonts.bold};
     }
+    // border-bottom: 2px solid;
   }
 `;
 

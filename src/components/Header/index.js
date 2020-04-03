@@ -12,6 +12,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Hidden from '@material-ui/core/Hidden';
 
 import Link from '../Link';
 import logo from '../../assets/img/logo.png';
@@ -51,12 +52,37 @@ const style = theme => ({
   grow: {
     flexGrow: 1,
   },
+  logo: {
+    textAlign: "center"
+  },
+  toolbar: {
+    // minHeight: 128,
+    alignItems: 'flex-start',
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(2),
+    display: 'block'
+  },
   navbarContainer: {
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
+    background: 'transparent',
+    boxShadow: 'none'
   },
   menuButton: {
-    marginLeft: "auto"
+    display: 'flex',
+    alignSelf: 'center',
   },
+  homeButton: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  links: {
+    flexGrow: 1,
+    alignSelf: 'flex-end',
+    display: 'flex',
+    justifyContent: 'space-evenly'
+  },
+  link: {
+  }
 });
 
 function Header({ classes, links }) {
@@ -77,36 +103,60 @@ function Header({ classes, links }) {
   };
 
   return (
-    <div className={classes.grow}>
+    <div>
+
       <AppBar position="static" className={classes.navbarContainer}>
-        <Toolbar>
-          <Link url="/">
-            GroundZeroHK
+        <Toolbar className={classes.toolbar}>
+
+          <div className={classes.homeButton}>
+            <Link url="/">
+              GroundZeroHK
           </Link>
 
-          <div className={classes.menuButton} >
-            <MenuIcon onClick={handleClick} />
-            <StyledMenu
-              id="customized-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
+            <Hidden smUp>
+              <div className={classes.menuButton} >
+                <MenuIcon onClick={handleClick} />
+                <StyledMenu
+                  id="customized-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  {links.map(link => {
+                    return (
+                      <StyledMenuItem key={link.to} onClick={toggleCollapse} >
+                        <Link
+                          url={link.to}
+                          active={window.location.pathname === link.to}
+                        >
+                          <span title={link.name}>{link.name}</span>
+                        </Link>
+                      </StyledMenuItem>
+                    );
+                  })}
+                </StyledMenu>
+              </div>
+            </Hidden>
+          </div>
+
+          <Hidden only='xs'>
+            <div className={classes.links}>
               {links.map(link => {
                 return (
-                  <StyledMenuItem key={link.to} onClick={toggleCollapse} >
+                  <div key={link.to} className={classes.link}>
                     <Link
                       url={link.to}
-                      active={window.location.pathname === link.to}
                     >
                       <span title={link.name}>{link.name}</span>
                     </Link>
-                  </StyledMenuItem>
+                  </div>
                 );
               })}
-            </StyledMenu>
-          </div>
+            </div>
+          </Hidden>
+
+
         </Toolbar>
       </AppBar>
 

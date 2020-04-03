@@ -32,9 +32,9 @@ class ProductDetailPage extends React.Component {
     this.state = {};
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentDidUpdate() {}
+  componentDidUpdate() { }
 
   render() {
     const { match, classes, history } = this.props;
@@ -48,15 +48,15 @@ class ProductDetailPage extends React.Component {
 
     return (
       <div>
-        <Container>
-          <div className="page-wrapper" id="product-page">
-            <Query
-              query={GET_PRODUCT}
-              render={renderView}
-              variables={{ id, reviewsFilter: { product: id } }}
-            />
-          </div>
-        </Container>
+        {/* <Container> */}
+        <div>
+          <Query
+            query={GET_PRODUCT}
+            render={renderView}
+            variables={{ id, reviewsFilter: { product: id } }}
+          />
+        </div>
+        {/* </Container> */}
       </div>
     );
   }

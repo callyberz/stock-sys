@@ -13,9 +13,9 @@ import ProductDetail from "./ProductDetail";
 
 function action({ match, history }) {
   return (
-    <Layout>
+    <div>
       <ProductDetail match={match} history={history} />
-    </Layout>
+    </div>
   );
 }
 

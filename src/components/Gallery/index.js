@@ -14,7 +14,7 @@ const style = theme => ({
     // maxWidth: "100%"
   },
   galleryImage: {
-    maxWidth: "100%"
+    maxWidth: "90%"
   }
 });
 
@@ -37,7 +37,7 @@ class Gallery extends Component {
 
     return (
       <div className={classes.root}>
-        <Grid container spacing={2}>
+        <Grid container spacing={8}>
           {images.map((item, index) => {
             return (
               <Grid item xs={12} key={item}>

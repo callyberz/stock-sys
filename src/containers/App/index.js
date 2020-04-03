@@ -15,15 +15,12 @@ import Footer from "../../components/Footer";
 import About from "../About";
 import Blog from "../Blog";
 import Home from "../Home";
-import RestaurantsPage from "../RestaurantsPage";
-import RestaurantPage from "../RestaurantPage";
 import ProductsPage from "../ProductsPage";
 import ProductDetailPage from "../ProductDetailPage";
 import NotFound from "../NotFound";
-import Layout from "../../components/Layout";
-
 
 const headerUrls = [
+  { name: "Home", to: "/" },
   { name: "Products", to: "/products" },
   { name: "About Us", to: "/about" }
 ];
