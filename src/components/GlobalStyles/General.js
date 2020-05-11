@@ -24,7 +24,7 @@ const General = createGlobalStyle`
     }
     .container {
       @media (min-width: ${sizes.wide}) {
-        max-width: 1240px;
+        // max-width: 1240px;
       }
     }
     ul {

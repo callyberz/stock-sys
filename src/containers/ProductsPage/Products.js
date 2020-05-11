@@ -4,20 +4,20 @@
  *
  */
 
-import React from "react";
-import { withStyles } from "@material-ui/styles";
-import { style, theme } from "./style.js";
-import PropTypes from "prop-types";
-import { Container } from "reactstrap";
-import { set } from "lodash";
+import React from 'react';
+import { withStyles } from '@material-ui/styles';
+import { style, theme } from './style.js';
+import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
+import { set } from 'lodash';
 
-import { GET_PRODUCTS } from "../../queries";
-import Query from "../../components/Query";
+import { GET_PRODUCTS } from '../../queries';
+import Query from '../../components/Query';
 
-import getQueryParameters from "../../utils/getQueryParameters";
+import getQueryParameters from '../../utils/getQueryParameters';
 
-import RenderView from "./RenderView";
-import Filters from "../../components/Filters";
+import RenderView from './RenderView';
+import Filters from '../../components/Filters';
 
 class ProductsPage extends React.Component {
   static propTypes = {
@@ -35,45 +35,45 @@ class ProductsPage extends React.Component {
     this.state = {};
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentDidUpdate() { }
+  componentDidUpdate() {}
 
   render() {
     const {
       location: { search },
       history,
-      classes
+      classes,
     } = this.props;
 
-    const start = parseInt(getQueryParameters(search, "start"), 10) || 0;
-    const orderby = getQueryParameters(search, "orderby") || "name";
+    const start = parseInt(getQueryParameters(search, 'start'), 10) || 0;
+    const orderby = getQueryParameters(search, 'orderby') || 'name';
     const range = 10;
 
     const setSearch = (where, nextStart) => {
       history.push({
-        search: `?brand=${where.brand}&start=${nextStart}`
+        search: `?brand=${where.brand}&start=${nextStart}`,
       });
     };
 
     const getWhereParams = () => {
-      const brand = getQueryParameters(search, "brand");
+      const brand = getQueryParameters(search, 'brand');
       return {
-        brand
+        brand,
       };
     };
 
     const prepareWhereParams = () => {
       const where = getWhereParams();
       return Object.keys(where).reduce((acc, current) => {
-        if (!!where[current] && !where[current].includes("all")) {
+        if (!!where[current] && !where[current].includes('all')) {
           acc[current] = where[current];
         }
         return acc;
       }, {});
     };
 
-    const handleClick = id => history.push(`/${id}/details`);
+    const handleClick = (id) => history.push(`/${id}/details`);
 
     const handleChange = ({ target }) => {
       let where = getWhereParams();
@@ -83,26 +83,34 @@ class ProductsPage extends React.Component {
 
     const handlePageChange = ({ target }) => {
       let where = getWhereParams();
-      where.brand = where.brand ? where.brand : "all"
+      where.brand = where.brand ? where.brand : 'all';
       setSearch(where, target.value);
     };
 
     const renderFilters = ({ brands }) => {
       const filters = [
         {
-          title: "Brands",
-          name: "brands",
-          options: [{ id: "all", name: "all" }, ...brands],
-          value: getQueryParameters(search, "brand") || "all"
-        }
+          title: 'Brands',
+          name: 'brands',
+          options: [{ id: 'all', name: 'all' }, ...brands],
+          value: getQueryParameters(search, 'brand') || 'all',
+        },
       ];
-      const selectedBrand = getWhereParams().brand != null ? getWhereParams() : "All"
+      const selectedBrand =
+        getWhereParams().brand != null ? getWhereParams() : 'All';
 
       return (
-        <Filters filters={filters} onChange={handleChange} range={range} selectedOption={selectedBrand} />
+        <Filters
+          filters={filters}
+          onChange={handleChange}
+          range={range}
+          selectedOption={selectedBrand}
+        />
       );
     };
+
     const renderView = ({ products, ...rest }) => {
+      console.log(rest);
       return (
         <div>
           {renderFilters(rest)}
@@ -119,8 +127,7 @@ class ProductsPage extends React.Component {
     };
 
     return (
-      <div>
-        <Container>
+      <div className={classes.root}>
           <Query
             query={GET_PRODUCTS}
             render={renderView}
@@ -128,10 +135,9 @@ class ProductsPage extends React.Component {
               limit: 10,
               start,
               sort: `${orderby}:ASC`,
-              where: prepareWhereParams()
+              where: prepareWhereParams(),
             }}
           />
-        </Container>
       </div>
     );
   }

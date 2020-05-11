@@ -6,10 +6,10 @@
 
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
 
-import GlobalStyles from "../../components/GlobalStyles";
+import theme from "./Theme";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import About from "../About";
@@ -24,6 +24,7 @@ const headerUrls = [
   { name: "Products", to: "/products" },
   { name: "About Us", to: "/about" }
 ];
+
 const footerUrls = [
   { name: "Products", to: "/products" },
   { name: "About us", to: "/about" },
@@ -33,17 +34,18 @@ const footerUrls = [
 function App() {
   return (
     <div>
-      {/* <GlobalStyles /> */}
+       <MuiThemeProvider theme={theme}>
       <Header links={headerUrls} />
       <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/about" component={About} exact />
         <Route path="/blog" component={Blog} exact />
         <Route path="/products" component={ProductsPage} exact />
-        <Route path="/:id/:content" component={ProductDetailPage} exact />
+        <Route path="/:id/:content" component={ProductDetailPage} exact /> 
         <Route component={NotFound} />
       </Switch>
-      <Footer links={footerUrls} />
+      </MuiThemeProvider>
+      {/* <Footer links={footerUrls} /> */}
     </div>
   );
 }

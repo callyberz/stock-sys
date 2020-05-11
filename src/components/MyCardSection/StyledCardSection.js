@@ -20,6 +20,8 @@ const StyledCardSection = styled.div`
     &.description {
       line-height: 1.33;
       margin-top: ${sizes.margin * 0.6}px;
+      font-weight: 600;
+      font-size: 1em;
     }
   }
   .link p {
